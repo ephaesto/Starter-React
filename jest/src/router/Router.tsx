@@ -1,14 +1,24 @@
 import {
   createBrowserRouter,
+  createRoutesFromElements,
+  Route,
   RouterProvider,
 } from "react-router-dom";
-import { Routes } from "./Routes";
+import { optionsRoutesLayouts } from "../layouts/optionsRoutesLayouts";
+import { optionsRouteRoot } from "../pages/optionsRouteRoot";
+import { optionsRoutesPages } from "../pages/optionsRoutesPages";
+import { optionsRoutesSwitches } from "../switches/optionsRoutesSwitches";
+import { createRouteObject } from "./utils/createRouteObject";
 
-const router = createBrowserRouter([...Routes
-]);
+const route =  createRouteObject({
+  root: optionsRouteRoot,
+  pages: optionsRoutesPages,
+  layouts: optionsRoutesLayouts,
+  switches: optionsRoutesSwitches,
+})
+const router = createBrowserRouter(route);
 
 const Router = (): JSX.Element => {
-    
   return (
     <RouterProvider router={router} />
   );
