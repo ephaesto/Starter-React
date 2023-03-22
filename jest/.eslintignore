@@ -1,0 +1,9 @@
+.eslintrc.js
+.prettierrc.js
+doc/
+node_modules/
+dist/
+build/
+coverage/
+sonar.js
+ci/

@@ -1,17 +1,17 @@
-import { OptionsRoutesPagesType } from "../optionsRoutesPages"
-import NoMatch from "./NoMatch"
+import { OptionsRoutesPagesType } from 'pages/optionsRoutesPagesTypes';
+import NoMatch from './NoMatch';
 
-export const NoMatchRoutes : OptionsRoutesPagesType =[
+export const NoMatchRoutes: OptionsRoutesPagesType = [
   {
-    path: ":noMatch*",
+    path: ':noMatch*',
     element: <NoMatch />,
-    layout:'default',
-    switch: ["auth","linked"],
+    layout: 'default',
+    switch: ['auth', 'linked'],
   },
   {
-    path: ":noMatch*",
+    path: ':noMatch*',
     element: <NoMatch />,
-    layout:'auth',
-    switch: ["auth"],
+    layout: 'auth',
+    switch: ['auth'],
   },
-]
+];

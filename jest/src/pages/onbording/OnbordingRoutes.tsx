@@ -1,10 +1,10 @@
-import { OptionsRoutesPagesType } from "../optionsRoutesPages"
-import OnbordingPage from "./OnbordingPage"
+import { OptionsRoutesPagesType } from 'pages/optionsRoutesPagesTypes';
+import OnbordingPage from './OnbordingPage';
 
-export const OnbordingRoutes : OptionsRoutesPagesType = [
+export const OnbordingRoutes: OptionsRoutesPagesType = [
   {
-    path: "onbording",
+    path: 'onbording',
     element: <OnbordingPage />,
-    switch: ["auth"],
+    switch: ['auth'],
   },
-]
+];

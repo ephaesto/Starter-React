@@ -1,23 +1,23 @@
-import { OptionsRoutesPagesType } from "../optionsRoutesPages"
-import HomePage from "./HomePage"
+import { OptionsRoutesPagesType } from 'pages/optionsRoutesPagesTypes';
+import HomePage from './HomePage';
 
-export const HomeRoutes : OptionsRoutesPagesType =[
+export const HomeRoutes: OptionsRoutesPagesType = [
   {
-    path: "teste",
+    path: 'teste',
     element: <HomePage />,
-    layout:'auth',
-    switch: ["auth","linked"],
+    layout: 'auth',
+    switch: ['auth', 'linked'],
   },
   {
-    index:true,
+    index: true,
     element: <HomePage />,
-    layout:'default',
-    switch: ["auth","linked"],
+    layout: 'default',
+    switch: ['auth', 'linked'],
   },
   {
-    path: "valide",
+    path: 'valide',
     element: <HomePage />,
-    layout:'default',
-    switch: ["auth","linked"],
+    layout: 'default',
+    switch: ['auth', 'linked'],
   },
-]
+];
