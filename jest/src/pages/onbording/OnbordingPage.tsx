@@ -1,20 +1,19 @@
-import { useState } from 'react'
-import './Onbording.css'
+import { useState } from 'react';
+import './Onbording.css';
 
-function OnbordingPage() {
-  const [count, setCount] = useState(0)
+const OnbordingPage = (): JSX.Element => {
+  const [count, setCount] = useState(0);
 
   return (
     <div className="App">
-     
       <h1>Onbording</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button type="button" onClick={() => setCount(oldCount => oldCount + 1)}>
           count is {count}
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default OnbordingPage
+export default OnbordingPage;

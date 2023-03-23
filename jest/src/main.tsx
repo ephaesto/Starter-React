@@ -1,10 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import Router from './router/Router'
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import Router from './router/Router';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const container = document.getElementById('root');
+if (!container) {
+  throw new Error('container not found!');
+}
+const root = createRoot(container);
+root.render(
   <React.StrictMode>
     <Router />
   </React.StrictMode>,
-)
+);

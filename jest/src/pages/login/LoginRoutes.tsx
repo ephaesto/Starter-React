@@ -1,15 +1,14 @@
-import { OptionsRoutesPagesType } from "../optionsRoutesPages";
-import LoginPage from "./LoginPage";
+import { OptionsRoutesPagesType } from 'pages/optionsRoutesPagesTypes';
+import LoginPage from './LoginPage';
 
-
-export const LoginRoutes : OptionsRoutesPagesType =[
+export const LoginRoutes: OptionsRoutesPagesType = [
   {
-    path: "login",
+    path: 'login',
     element: <LoginPage />,
   },
   {
-    path: "login",
-    layout:'auth',
+    path: 'login',
+    layout: 'auth',
     element: <LoginPage />,
   },
-]
+];
