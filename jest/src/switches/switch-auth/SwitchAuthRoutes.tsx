@@ -1,7 +1,6 @@
-import { OmitChildrenRouteObject } from "../../router/RouterTypes"
-import SwitchAuth from "./SwitchAuth"
+import { OmitChildrenRouteObject } from 'router/RouterTypes';
+import SwitchAuth from './SwitchAuth';
 
-
-export const SwitchAuthRoutes : OmitChildrenRouteObject = {
+export const SwitchAuthRoutes: OmitChildrenRouteObject = {
   element: <SwitchAuth />,
-}
+};

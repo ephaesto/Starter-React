@@ -1,12 +1,12 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom';
 
-function LayoutAuth () {
-
+const LayoutAuth = (): JSX.Element => {
   return (
     <>
       <p>layout Auth</p>
-      <Outlet/>
-    </>)
-}
+      <Outlet />
+    </>
+  );
+};
 
-export default LayoutAuth
+export default LayoutAuth;

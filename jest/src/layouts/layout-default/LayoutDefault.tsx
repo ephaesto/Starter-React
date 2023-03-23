@@ -1,12 +1,12 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom';
 
-function LayoutDefault () {
-
+const LayoutDefault = (): JSX.Element => {
   return (
     <>
       <p>layout default</p>
-      <Outlet/>
-    </>)
-}
+      <Outlet />
+    </>
+  );
+};
 
-export default LayoutDefault
+export default LayoutDefault;
