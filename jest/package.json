@@ -13,6 +13,8 @@
     "prepare": "cd .. && husky install jest/.husky"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.26.1",
+    "jotai": "^2.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.2"

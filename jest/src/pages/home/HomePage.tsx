@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useGetCounter } from 'api/bff/counterEndpoints';
 import reactLogo from 'assets/react.svg';
+import { atom, useAtom } from 'jotai';
 import './Home.css';
 
+const counterAtom = atom(0);
 const HomePage = (): JSX.Element => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useAtom(counterAtom);
+  const { data } = useGetCounter({ name: 'usain' });
 
   return (
     <div className="App">
@@ -20,9 +23,7 @@ const HomePage = (): JSX.Element => {
         <button type="button" onClick={() => setCount(oldCount => oldCount + 1)}>
           count is {count}
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <p>{`${data?.name} count ${data?.count} times`}</p>
       </div>
       <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
     </div>
