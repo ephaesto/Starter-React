@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import Switch from 'components/utils/Switch';
+import Switch from 'utils/Switch';
 
 const SwitchLinked = (): JSX.Element => {
   const [isValideState] = useState(true);

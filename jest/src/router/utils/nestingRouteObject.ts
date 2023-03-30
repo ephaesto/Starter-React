@@ -6,10 +6,11 @@ import { OmitChildrenRouteObject } from 'router/RouterTypes';
 import { groupByKey } from './groupByKey';
 import { splitPagesByTheme } from './splitPagesByTheme';
 import { addOtherPages } from './addOtherPages';
+import { copiePages } from './copiePages';
 
 type NestingRouteObjectType = {
   parent: OmitChildrenRouteObject;
-  pages: OptionsRoutesPagesType;
+  pages: Omit<OptionsRoutesPagesType, 'wrapper' | 'idRoute'>;
   layouts?: OptionsRoutesLayoutsType;
   switches?: OptionsRoutesSwitchesType;
 };
@@ -23,7 +24,7 @@ export const nestingRouteObject = ({ parent, pages, layouts, switches }: Nesting
     return [routes];
   }
 
-  const { pagesList, layoutsList, switchesList, otherPages } = splitPagesByTheme([...pages]);
+  const { pagesList, layoutsList, switchesList, otherPages } = splitPagesByTheme(copiePages(pages));
 
   if (switchesList.length && switches) {
     const switchesGroupByKey = groupByKey(switchesList, 'switch');
@@ -44,7 +45,8 @@ export const nestingRouteObject = ({ parent, pages, layouts, switches }: Nesting
 
   if (layoutsList.length && layouts) {
     const layoutsGroupByKey = groupByKey(layoutsList, 'layout');
-    Object.entries(layoutsGroupByKey).forEach(([keyLayout, pagesLayout]) => {
+    const layoutsGroupByKeyWithOtherPages = addOtherPages(layoutsGroupByKey, otherPages, 'layout');
+    Object.entries(layoutsGroupByKeyWithOtherPages).forEach(([keyLayout, pagesLayout]) => {
       if (keyLayout in layouts) {
         const parentLayout = layouts[keyLayout as keyof OptionsRoutesLayoutsType];
 
@@ -65,7 +67,7 @@ export const nestingRouteObject = ({ parent, pages, layouts, switches }: Nesting
       if (!routes.children) {
         routes.children = [];
       }
-      routes.children.push(pageInList);
+      routes.children.push({ ...pageInList });
     });
   }
 

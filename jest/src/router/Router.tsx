@@ -3,6 +3,7 @@ import { optionsRoutesLayouts } from 'layouts/optionsRoutesLayouts';
 import { optionsRouteRoot } from 'pages/optionsRouteRoot';
 import { optionsRoutesPages } from 'pages/optionsRoutesPages';
 import { optionsRoutesSwitches } from 'switches/optionsRoutesSwitches';
+import { listWrapper } from 'wrapper/listWrapper';
 import { createRouteObject } from './utils/createRouteObject';
 
 const route = createRouteObject({
@@ -10,6 +11,7 @@ const route = createRouteObject({
   pages: optionsRoutesPages,
   layouts: optionsRoutesLayouts,
   switches: optionsRoutesSwitches,
+  wrapper: listWrapper,
 });
 const router = createBrowserRouter(route);
 

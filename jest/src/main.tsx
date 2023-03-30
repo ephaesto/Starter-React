@@ -1,8 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { ListOrderSetup, ListSetup } from 'setup/ListSetup';
+import NestingContainer from 'utils/nesting-container/NestingContainer';
 import './index.css';
-import SetupFakeServer from 'setup/setup-fake-server/SetupFakeServer';
-import SetupQuery from 'setup/setup-query/SetupQuery';
 import Router from './router/Router';
 
 const container = document.getElementById('root');
@@ -14,10 +14,8 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <SetupFakeServer>
-      <SetupQuery>
-        <Router />
-      </SetupQuery>
-    </SetupFakeServer>
+    <NestingContainer containers={ListSetup} containersList={ListOrderSetup}>
+      <Router />
+    </NestingContainer>
   </React.StrictMode>,
 );
