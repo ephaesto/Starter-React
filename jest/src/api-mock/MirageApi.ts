@@ -23,6 +23,8 @@ type MirageTypes = {
   timing?: number;
 };
 
+let MY_SERVER: Server;
+
 export function fakeServer({
   environment = 'development',
   currentHttpCode = {},
@@ -30,6 +32,11 @@ export function fakeServer({
   isRouteMocked = {},
   timing = 0,
 }: MirageTypes): Server {
+  // Singleton My_SERVER
+  if (MY_SERVER) {
+    return MY_SERVER;
+  }
+
   const allRouteAreMockedByDefault: MirageRoutesMocked = {
     counter: {
       getCounter: true,
@@ -39,7 +46,7 @@ export function fakeServer({
 
   const httpCodeByDefault: MirageHttpCodesMocked = {
     counter: {
-      getCounter: '200',
+      getCounter: '500',
     },
   };
   const httpCode: MirageHttpCodesMocked = { ...httpCodeByDefault, ...currentHttpCode };
@@ -67,5 +74,6 @@ export function fakeServer({
 
   counterRoutes(server, httpCode.counter, isMocked.counter);
 
-  return server;
+  MY_SERVER = server;
+  return MY_SERVER;
 }

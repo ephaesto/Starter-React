@@ -1,35 +1,48 @@
 import { UseMutationResult, UseQueryResult } from '@tanstack/react-query';
-import { TQueryBuilder } from 'api/utils/types';
-import { useBffApiQueryBuilder } from './bffApi';
+import { ICounter } from 'api-mock/api/counter/counterTypes';
+import { IErrorHttp, useBffApiQueryBuilder } from './bffApi';
 
-export const useGetTopCounter = (data: { region: string }): UseMutationResult<{ name: string; count: number }> =>
-  useBffApiQueryBuilder.useMutation<{ region: string }, { name: string; count: number }>({
+export const useGetTopCounter = (data: { region: string }): UseMutationResult<ICounter, IErrorHttp> =>
+  useBffApiQueryBuilder.useMutation<{ region: string }, ICounter>({
     queryParameters: data,
     cacheTags: ['tagTopCounter'],
     queryOptions: { path: 'counter/top' },
   });
 
-export const useGetCounter = (data: { name: string }): UseQueryResult<{ name: string; count: number }> => {
-  const response = useBffApiQueryBuilder.useQuery<{ name: string }, { name: string; count: number }>({
+export const useGetCounter = (data: { name: string }): UseQueryResult<ICounter, IErrorHttp> => {
+  const response = useBffApiQueryBuilder.useQuery<{ name: string }, ICounter>({
     queryParameters: data,
-    cacheTags: ['tagCounter'],
+    cacheTags: ['tagOneCounter'],
+    queryOptions: {
+      path: 'counter',
+      handleError: async (res: Response): Promise<IErrorHttp> => ({
+        name: 'custom useGetCounter error',
+        body: await res.text(),
+        message: 'counter does not exist',
+        status: 404,
+        toString() {
+          return 'player not found!';
+        },
+      }),
+    },
+  });
+  return response;
+};
+
+export const useGetAllCounter = (): UseQueryResult<ICounter[], IErrorHttp> => {
+  const response = useBffApiQueryBuilder.useQuery<undefined, ICounter[]>({
+    cacheTags: ['tagAllCounter'],
     queryOptions: { path: '/counter' },
   });
   return response;
 };
 
-export const useGetAllCounter = (): UseQueryResult<{ name: string; count: number }> => {
-  const response = useBffApiQueryBuilder.useQuery<{ name: string }, { name: string; count: number }>({
+export const useSubscribeNewCounter = (data: { region: string; name: string }): UseMutationResult<null> => {
+  const options = { body: data };
+  const response = useBffApiQueryBuilder.useMutation<{ region: string; name: string }, null>({
     cacheTags: ['tagCounter'],
-    queryOptions: { path: '/counter' },
-  });
-  return response;
-};
-
-export const useGetCounter2 = (): UseQueryResult<null> => {
-  const response = useBffApiQueryBuilder.useQuery<undefined, null>({
-    cacheTags: ['tagCounter'],
-    queryOptions: { path: '/counter' },
+    queryOptions: { path: 'counter', options },
+    queryParameters: undefined,
   });
   return response;
 };
@@ -44,23 +57,22 @@ interface TRes {
   count: number;
 }
 
-const mockCallBack = (): void => {};
 export const useMutationCounter = ({ name, ...body }: TReq): UseMutationResult<TRes> => {
-  const options: TQueryBuilder<TReq, TRes, 'mutation'> = {
-    cacheTags: ['addCounter'],
-    queryOptions: { path: '/counter', options: { body } },
-    queryParameters: { name },
-  };
+  const cacheTags = ['addCounter'];
+  const queryOptions = { path: '/counter', options: { body } };
+  const queryParameters = { name };
+  const reactQueryOptions = { retry: 3, retryDelay: 0 };
 
-  let response = useBffApiQueryBuilder.useMutation<TReq, TRes>(options);
+  const response = useBffApiQueryBuilder.useMutation<TReq, TRes>({
+    cacheTags,
+    queryOptions,
+    queryParameters,
+    tanStackOptions: reactQueryOptions,
+  });
 
-  response = {
-    ...response,
-    reset() {
-      mockCallBack();
-      response.reset();
-    },
-  };
+  if (response.data?.count) {
+    response.data.count *= 2;
+  }
 
   return response;
 };

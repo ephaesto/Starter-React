@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { runServer } from './utils/runServer';
 
 interface ISetupFakeServerProps {
@@ -5,8 +6,15 @@ interface ISetupFakeServerProps {
 }
 
 const SetupFakeServer = ({ children }: ISetupFakeServerProps): JSX.Element => {
-  runServer('');
+  const [isRunning, setIsRunning] = useState(false);
 
-  return <>{children}</>;
+  useEffect(() => {
+    (async () => {
+      await runServer('');
+      setIsRunning(true);
+    })();
+  }, []);
+
+  return <>{isRunning && children}</>;
 };
 export default SetupFakeServer;
