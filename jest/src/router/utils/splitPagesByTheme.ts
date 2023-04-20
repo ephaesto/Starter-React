@@ -10,8 +10,8 @@ type SplitPagesByThemeReturnTypes = {
 
 export const splitPagesByTheme = (pages: OptionsRoutesPagesType): SplitPagesByThemeReturnTypes => {
   const pagesList: RouteObject[] = [];
-  const layoutsList: OptionsRoutesPagesType = [];
-  const switchesList: OptionsRoutesPagesType = [];
+  const layoutsList: Omit<OptionsRoutesPagesType, 'wrapper' | 'idRoute'> = [];
+  const switchesList: Omit<OptionsRoutesPagesType, 'wrapper' | 'idRoute'> = [];
   const otherPages = pages.reduce((oldOtherPages, page) => {
     if (!('layout' in page) && !('switch' in page)) {
       pagesList.push({ ...page });
@@ -30,7 +30,7 @@ export const splitPagesByTheme = (pages: OptionsRoutesPagesType): SplitPagesByTh
 
     oldOtherPages.push({ ...page });
     return oldOtherPages;
-  }, [] as OptionsRoutesPagesType);
+  }, [] as Omit<OptionsRoutesPagesType, 'wrapper' | 'idRoute'>);
 
   return {
     pagesList,
