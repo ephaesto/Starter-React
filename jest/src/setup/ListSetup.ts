@@ -7,4 +7,4 @@ export const ListSetup: ListSetupType = {
   query: SetupQuery,
 };
 
-export const ListOrderSetup: (keyof ListSetupType)[] = ['fakeServer', 'query'];
+export const ListOrderSetup: (keyof ListSetupType)[] = Object.keys(ListSetup) as (keyof ListSetupType)[];
