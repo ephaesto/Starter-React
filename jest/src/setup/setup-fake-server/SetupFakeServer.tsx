@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { runServer } from './utils/runServer';
 
 export interface IFakeServer {
-  nativeFetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>;
+  nativeFetch: (input: RequestInfo, init?: RequestInit | undefined) => Promise<Response>;
 }
 
 const fakeServerRepesentation: IFakeServer = {
