@@ -37,8 +37,8 @@ export interface IqueryBuilderGeneratorProps<TError extends Error> {
   baseUrl: string;
   baseOptions: IOptions;
   baseTanStackQueryOptions?: DefaultOptions;
-  baseQuery?: <TRequest extends TypeRequest, TResponse, TQuery extends TypeQuery>(
-    params: IQueryOptions<TRequest, TQuery, TError>,
+  baseQuery?: <TRequest extends TypeRequest, TResponse, TQuery extends TypeQuery, TBaseError extends TError>(
+    params: IQueryOptions<TRequest, TQuery, TBaseError>,
   ) => Promise<TResponse>;
   baseHandleResponse?: TypeHandlerResponse;
   baseHandleError?: TypeHandlerError<TError>;
