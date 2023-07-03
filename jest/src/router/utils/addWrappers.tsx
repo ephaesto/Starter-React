@@ -1,31 +1,30 @@
-import { OptionsRoutesPagesType } from 'pages/optionsRoutesPagesTypes';
 import { CustomeRouteObject } from 'router/RouterTypes';
 import NestingContainer from 'utils/nesting-container/NestingContainer';
-import { IWrapperProps, ListWrapperType } from 'wrapper/listWrapperTypes';
 import { copiePages } from './copiePages';
+import { PagesObjectType, WrapperPropsObjectType, WrappersObjectType } from './types/SwitchRouteObjectType';
 
 export const addWrappers = (
-  pages: OptionsRoutesPagesType,
-  wrapper?: ListWrapperType,
-): Omit<OptionsRoutesPagesType, 'wrapper' | 'idRoute'> => {
+  pages: PagesObjectType,
+  wrappers?: WrappersObjectType,
+): Omit<PagesObjectType, 'wrapper' | 'idRoute'> => {
   const copiedPages = copiePages(pages);
   const pagesWrapperLess = copiedPages.map(page => {
-    const globalProps = { idRoute: page.idRoute } as Partial<IWrapperProps>;
+    const globalProps = { idRoute: page.idRoute } as Partial<WrapperPropsObjectType>;
     const internalPages: Partial<CustomeRouteObject> = { ...page };
-    if (internalPages.wrapper && wrapper) {
-      let arrayWrapper = internalPages.wrapper;
-      if (!Array.isArray(internalPages.wrapper)) {
-        arrayWrapper = [internalPages.wrapper];
+    if (internalPages.wrappers && wrappers) {
+      let arrayWrapper = internalPages.wrappers;
+      if (!Array.isArray(internalPages.wrappers)) {
+        arrayWrapper = [internalPages.wrappers];
       }
       if (arrayWrapper.length) {
         const Element = internalPages.element;
-        const containersList = arrayWrapper as (keyof ListWrapperType)[];
+        const containersList = arrayWrapper as (keyof WrappersObjectType)[];
         internalPages.element = (
-          <NestingContainer globalProps={globalProps} containers={wrapper} containersList={containersList}>
+          <NestingContainer globalProps={globalProps} containers={wrappers} containersList={containersList}>
             {Element}
           </NestingContainer>
         );
-        delete internalPages.wrapper;
+        delete internalPages.wrappers;
       }
     }
     if (internalPages.idRoute) {
@@ -35,5 +34,5 @@ export const addWrappers = (
     return internalPages;
   });
 
-  return pagesWrapperLess as Omit<OptionsRoutesPagesType, 'wrapper' | 'idRoute'>;
+  return pagesWrapperLess as Omit<PagesObjectType, 'wrapper' | 'idRoute'>;
 };
