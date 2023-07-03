@@ -8,6 +8,6 @@ export type OmitChildrenRouteObject = Omit<RouteObject, 'children'>;
 export type CustomeRouteObject = RouteObject & {
   layout?: (keyof OptionsRoutesLayoutsType)[] | keyof OptionsRoutesLayoutsType;
   switch?: (keyof OptionsRoutesSwitchesType)[] | keyof OptionsRoutesSwitchesType;
-  wrapper?: (keyof ListWrapperType)[] | keyof ListWrapperType;
+  wrappers?: (keyof ListWrapperType)[] | keyof ListWrapperType;
   idRoute: string;
 };
