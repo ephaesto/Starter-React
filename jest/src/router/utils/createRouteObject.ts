@@ -1,18 +1,20 @@
-import { OptionsRoutesLayoutsType } from 'layouts/optionsRoutesLayoutsTypes';
-import { OptionsRoutesPagesType } from 'pages/optionsRoutesPagesTypes';
 import { RouteObject } from 'react-router-dom';
-import { OmitChildrenRouteObject } from 'router/RouterTypes';
-import { OptionsRoutesSwitchesType } from 'switches/optionsRoutesSwitchesTypes';
-import { ListWrapperType } from 'wrapper/listWrapperTypes';
 import { addWrappers } from './addWrappers';
 import { nestingRouteObject } from './nestingRouteObject';
+import {
+  RootObjectType,
+  PagesObjectType,
+  LayoutsObjectType,
+  SwitchesObjectType,
+  WrappersObjectType,
+} from './types/SwitchRouteObjectType';
 
 type CreateRouteObjectType = {
-  root: OmitChildrenRouteObject;
-  pages: OptionsRoutesPagesType;
-  layouts?: OptionsRoutesLayoutsType;
-  switches?: OptionsRoutesSwitchesType;
-  wrapper?: ListWrapperType;
+  root: RootObjectType;
+  pages: PagesObjectType;
+  layouts?: LayoutsObjectType;
+  switches?: SwitchesObjectType;
+  wrappers?: WrappersObjectType;
 };
 
 export const createRouteObject = ({
@@ -20,9 +22,9 @@ export const createRouteObject = ({
   pages,
   layouts,
   switches,
-  wrapper,
+  wrappers,
 }: CreateRouteObjectType): RouteObject[] => {
-  const pagesWithwrapper = addWrappers(pages, wrapper);
+  const pagesWithwrapper = addWrappers(pages, wrappers);
   const test = nestingRouteObject({ parent: root, pages: pagesWithwrapper, layouts, switches });
   return test;
 };

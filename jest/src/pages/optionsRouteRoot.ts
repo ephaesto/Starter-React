@@ -1,5 +1,5 @@
-import { OmitChildrenRouteObject } from 'router/RouterTypes';
+import { RootObjectType } from 'router/utils/types/SwitchRouteObjectType';
 
-export const optionsRouteRoot: OmitChildrenRouteObject = {
+export const optionsRouteRoot: RootObjectType = {
   path: '/',
 };

@@ -1,17 +1,17 @@
-import { OptionsRoutesPagesType } from 'pages/optionsRoutesPagesTypes';
 import { RouteObject } from 'react-router-dom';
+import { PagesObjectType } from './types/SwitchRouteObjectType';
 
 type SplitPagesByThemeReturnTypes = {
   pagesList: RouteObject[];
-  layoutsList: OptionsRoutesPagesType;
-  switchesList: OptionsRoutesPagesType;
-  otherPages: OptionsRoutesPagesType;
+  layoutsList: PagesObjectType;
+  switchesList: PagesObjectType;
+  otherPages: PagesObjectType;
 };
 
-export const splitPagesByTheme = (pages: OptionsRoutesPagesType): SplitPagesByThemeReturnTypes => {
+export const splitPagesByTheme = (pages: PagesObjectType): SplitPagesByThemeReturnTypes => {
   const pagesList: RouteObject[] = [];
-  const layoutsList: Omit<OptionsRoutesPagesType, 'wrapper' | 'idRoute'> = [];
-  const switchesList: Omit<OptionsRoutesPagesType, 'wrapper' | 'idRoute'> = [];
+  const layoutsList: Omit<PagesObjectType, 'wrapper' | 'idRoute'> = [];
+  const switchesList: Omit<PagesObjectType, 'wrapper' | 'idRoute'> = [];
   const otherPages = pages.reduce((oldOtherPages, page) => {
     if (!('layout' in page) && !('switch' in page)) {
       pagesList.push({ ...page });
@@ -30,7 +30,7 @@ export const splitPagesByTheme = (pages: OptionsRoutesPagesType): SplitPagesByTh
 
     oldOtherPages.push({ ...page });
     return oldOtherPages;
-  }, [] as Omit<OptionsRoutesPagesType, 'wrapper' | 'idRoute'>);
+  }, [] as Omit<PagesObjectType, 'wrapper' | 'idRoute'>);
 
   return {
     pagesList,

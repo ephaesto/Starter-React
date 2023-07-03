@@ -1,18 +1,15 @@
 import { RouteObject } from 'react-router-dom';
-import { OptionsRoutesLayoutsType } from 'layouts/optionsRoutesLayoutsTypes';
-import { OptionsRoutesPagesType } from 'pages/optionsRoutesPagesTypes';
-import { OptionsRoutesSwitchesType } from 'switches/optionsRoutesSwitchesTypes';
-import { OmitChildrenRouteObject } from 'router/RouterTypes';
 import { groupByKey } from './groupByKey';
 import { splitPagesByTheme } from './splitPagesByTheme';
 import { addOtherPages } from './addOtherPages';
 import { copiePages } from './copiePages';
+import { LayoutsObjectType, PagesObjectType, RootObjectType, SwitchesObjectType } from './types/SwitchRouteObjectType';
 
 type NestingRouteObjectType = {
-  parent: OmitChildrenRouteObject;
-  pages: Omit<OptionsRoutesPagesType, 'wrapper' | 'idRoute'>;
-  layouts?: OptionsRoutesLayoutsType;
-  switches?: OptionsRoutesSwitchesType;
+  parent: RootObjectType;
+  pages: Omit<PagesObjectType, 'wrapper' | 'idRoute'>;
+  layouts?: LayoutsObjectType;
+  switches?: SwitchesObjectType;
 };
 
 export const nestingRouteObject = ({ parent, pages, layouts, switches }: NestingRouteObjectType): RouteObject[] => {
@@ -31,7 +28,7 @@ export const nestingRouteObject = ({ parent, pages, layouts, switches }: Nesting
     const switchesGroupByKeyWithOtherPages = addOtherPages(switchesGroupByKey, otherPages, 'switch');
     Object.entries(switchesGroupByKeyWithOtherPages).forEach(([keySwitch, pagesSwitch]) => {
       if (keySwitch in switches) {
-        const parentSwitch = switches[keySwitch as keyof OptionsRoutesSwitchesType];
+        const parentSwitch = switches[keySwitch as keyof SwitchesObjectType];
         if (!routes.children) {
           routes.children = [];
         }
@@ -48,7 +45,7 @@ export const nestingRouteObject = ({ parent, pages, layouts, switches }: Nesting
     const layoutsGroupByKeyWithOtherPages = addOtherPages(layoutsGroupByKey, otherPages, 'layout');
     Object.entries(layoutsGroupByKeyWithOtherPages).forEach(([keyLayout, pagesLayout]) => {
       if (keyLayout in layouts) {
-        const parentLayout = layouts[keyLayout as keyof OptionsRoutesLayoutsType];
+        const parentLayout = layouts[keyLayout as keyof LayoutsObjectType];
 
         if (!routes.children) {
           routes.children = [];

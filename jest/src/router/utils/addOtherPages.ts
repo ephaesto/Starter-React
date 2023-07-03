@@ -1,11 +1,11 @@
-import { OptionsRoutesPagesType } from 'pages/optionsRoutesPagesTypes';
 import { CustomeRouteObject } from 'router/RouterTypes';
 import { GroupByKeyType } from './groupByKey';
 import { copiePages } from './copiePages';
+import { PagesObjectType } from './types/SwitchRouteObjectType';
 
 export const addOtherPages = (
   pagesGroupByKey: GroupByKeyType,
-  otherPages: Omit<OptionsRoutesPagesType, 'wrapper' | 'idRoute'>,
+  otherPages: Omit<PagesObjectType, 'wrapper' | 'idRoute'>,
   keyname: keyof CustomeRouteObject,
 ): GroupByKeyType => {
   const copiedOtherPages = copiePages(otherPages);

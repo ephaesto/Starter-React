@@ -13,7 +13,7 @@ export const HomeRoutes: OptionsRoutesPagesType = [
     idRoute: 'home',
     index: true,
     element: <HomePage />,
-    wrapper: ['traking', 'scroll'],
+    wrappers: ['traking', 'scroll'],
     layout: ['default', 'auth'],
     switch: ['auth', 'linked'],
   },
