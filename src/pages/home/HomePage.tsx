@@ -1,4 +1,4 @@
-import { useGetCounter } from 'api/bff/counterEndpoints';
+import { useGetCounter } from 'api/bff/counter/counterEndpoints';
 import reactLogo from 'assets/react.svg';
 import { atom, useAtom } from 'jotai';
 import './Home.css';

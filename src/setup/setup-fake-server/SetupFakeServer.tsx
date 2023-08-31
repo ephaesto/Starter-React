@@ -20,7 +20,7 @@ const SetupFakeServer = ({ children }: IEnvironmentProviderProps): JSX.Element =
   useEffect(() => {
     setFakeServer({ nativeFetch: fetch });
     const loadFakeServer = async () => {
-      await runServer('');
+      await runServer();
       setIsRunning(true);
     };
 
