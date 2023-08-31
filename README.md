@@ -1,7 +1,6 @@
-# How-to-mock-in-front-end
+# Starter-React
 
-hello, in my job, I tested my project with 100% coverage. It's crazy.
-This repository is a REX to explain how to mock complex component in javascrit Front-End.
+We develop a starter-kit react cli first
 
 ## The Team
 
@@ -13,12 +12,3 @@ Maintainer or Contributor:
 
 - [Emeric Lebbrecht](https://github.com/ephaesto)
 
-## Our test rules
-
-1. Use testing library for user-centric way
-2. Mock HttpRequest and fetch with Mirage.js
-3. Mock all child in component
-
-## Why these rules ?
-
-Yes, it's an atypical way for testing, but with this way we arrive to test our components in real Unit Test.

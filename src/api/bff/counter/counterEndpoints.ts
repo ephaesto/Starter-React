@@ -1,6 +1,6 @@
 import { UseMutationResult, UseQueryResult } from '@tanstack/react-query';
-import { ICounter } from 'api-mock/api/counter/counterTypes';
-import { IErrorHttp, useBffApiQueryBuilder } from './bffApi';
+import { ICounter } from './counterTypes';
+import { IErrorHttp, useBffApiQueryBuilder } from '../bffApi';
 
 export const useGetTopCounter = (data: { region: string }): UseMutationResult<ICounter, IErrorHttp> =>
   useBffApiQueryBuilder.useMutation<{ region: string }, ICounter>({
