@@ -4,7 +4,7 @@ import { RequestHandler, rest } from 'msw';
 
 export const counterHandlers = (db: FactoryAPI<typeof factories>): Array<RequestHandler> => [
   rest.get('/api/counter', (req, res, { status, json: data, set: headers }) => {
-    const httpCode = { getCounter: '500' };
+    const httpCode = { getCounter: '200' };
     const name = req.url.searchParams.get('name');
     if (!name) {
       httpCode.getCounter = '500';
