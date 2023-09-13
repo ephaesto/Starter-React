@@ -1,16 +1,16 @@
-import { CustomeRouteObject } from 'router/RouterTypes';
-import NestingContainer from 'utils/nesting-container/NestingContainer';
-import { copiePages } from './copiePages';
+import { CustomRouteObject } from 'router/RouterTypes';
+import NestingContainer from 'utils/components/nesting-container/NestingContainer';
+import { copyPages } from './copyPages';
 import { PagesObjectType, WrapperPropsObjectType, WrappersObjectType } from './types/SwitchRouteObjectType';
 
 export const addWrappers = (
   pages: PagesObjectType,
   wrappers?: WrappersObjectType,
 ): Omit<PagesObjectType, 'wrapper' | 'idRoute'> => {
-  const copiedPages = copiePages(pages);
+  const copiedPages = copyPages(pages);
   const pagesWrapperLess = copiedPages.map(page => {
     const globalProps = { idRoute: page.idRoute } as Partial<WrapperPropsObjectType>;
-    const internalPages: Partial<CustomeRouteObject> = { ...page };
+    const internalPages: Partial<CustomRouteObject> = { ...page };
     if (internalPages.wrappers && wrappers) {
       let arrayWrapper = internalPages.wrappers;
       if (!Array.isArray(internalPages.wrappers)) {

@@ -2,7 +2,7 @@ import { RouteObject } from 'react-router-dom';
 import { groupByKey } from './groupByKey';
 import { splitPagesByTheme } from './splitPagesByTheme';
 import { addOtherPages } from './addOtherPages';
-import { copiePages } from './copiePages';
+import { copyPages } from './copyPages';
 import { LayoutsObjectType, PagesObjectType, RootObjectType, SwitchesObjectType } from './types/SwitchRouteObjectType';
 
 type NestingRouteObjectType = {
@@ -21,7 +21,7 @@ export const nestingRouteObject = ({ parent, pages, layouts, switches }: Nesting
     return [routes];
   }
 
-  const { pagesList, layoutsList, switchesList, otherPages } = splitPagesByTheme(copiePages(pages));
+  const { pagesList, layoutsList, switchesList, otherPages } = splitPagesByTheme(copyPages(pages));
 
   if (switchesList.length && switches) {
     const switchesGroupByKey = groupByKey(switchesList, 'switch');

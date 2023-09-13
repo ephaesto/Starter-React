@@ -1,11 +1,11 @@
-import { CustomeRouteObject } from 'router/RouterTypes';
+import { CustomRouteObject } from 'router/RouterTypes';
 import { PagesObjectType } from './types/SwitchRouteObjectType';
 
 export type GroupByKeyType = {
   [x: string]: PagesObjectType;
 };
 
-export const groupByKey = (pages: PagesObjectType, keyName: keyof CustomeRouteObject): GroupByKeyType => {
+export const groupByKey = (pages: PagesObjectType, keyName: keyof CustomRouteObject): GroupByKeyType => {
   return pages.reduce<GroupByKeyType>((oldPages, page) => {
     const copyPage = { ...page };
     let key = page[keyName];

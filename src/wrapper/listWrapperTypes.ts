@@ -1,4 +1,4 @@
-import { ContainerType } from 'utils/nesting-container/NestingContainerType';
+import { ContainerType } from 'utils/components/nesting-container/NestingContainerType';
 
 export type IWrapperProps = {
   children: React.ReactNode;
@@ -6,6 +6,6 @@ export type IWrapperProps = {
 };
 
 export type ListWrapperType = {
-  traking: ContainerType<IWrapperProps>;
+  tracking: ContainerType<IWrapperProps>;
   scroll: ContainerType<IWrapperProps>;
 };

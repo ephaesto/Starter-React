@@ -1,9 +1,26 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import qs from 'querystring';
-import bffQuery from '../bffQuery';
+import { useQueryClient } from '@tanstack/react-query';
+import { useMutationAuth } from 'api/hook/useMutationAuth';
+import { useNoCacheMutation } from 'api/hook/useNoCacheMutation';
+import { useQueryAuth } from 'api/hook/useQueryAuth';
+import { Params, UseMutationResult, UseQueryResult } from 'api/utils/types';
+import { bffMutation, bffQuery } from '../bffApi';
 import { ICounter } from './counterTypes';
 
-export const useGetCounter = (data: { name: string }): UseQueryResult<ICounter> => {
-  qs.stringify();
-  return useQuery(['tagOneCounter'], bffQuery<ICounter>(`/api/counter?name=${data.name}`));
+interface IParamsCounter extends Params {
+  name: string;
+}
+
+export const useGetCounter = (params: IParamsCounter): UseQueryResult<ICounter> => {
+  return useQueryAuth({ queryFn: bffQuery<ICounter>(`/api/counter`, { params }) });
 };
+
+export const usePostCounter = (): UseMutationResult<ICounter>=> {
+  const queryClient = useQueryClient()
+  return useMutationAuth({ mutationFn: bffMutation<ICounter>(`/api/counter`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tagOneCounter'] })
+    }
+  });
+};
+
+

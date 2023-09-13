@@ -1,4 +1,4 @@
-import { ContainerType } from 'utils/nesting-container/NestingContainerType';
+import { ContainerType } from 'utils/components/nesting-container/NestingContainerType';
 
 export type ISetupProps = {
   children: React.ReactNode;

@@ -5,7 +5,7 @@ import { ListWrapperType } from 'wrapper/listWrapperTypes';
 
 export type OmitChildrenRouteObject = Omit<RouteObject, 'children'>;
 
-export type CustomeRouteObject = RouteObject & {
+export type CustomRouteObject = RouteObject & {
   layout?: (keyof OptionsRoutesLayoutsType)[] | keyof OptionsRoutesLayoutsType;
   switch?: (keyof OptionsRoutesSwitchesType)[] | keyof OptionsRoutesSwitchesType;
   wrappers?: (keyof ListWrapperType)[] | keyof ListWrapperType;

@@ -1,8 +1,8 @@
 import { ListWrapperType } from './listWrapperTypes';
 import WrapperScroll from './wrapper-scroll/WrapperScroll';
-import WrapperTraking from './wrapper-traking/WrapperTraking';
+import WrapperTracking from './wrapper-tracking/WrapperTracking';
 
 export const listWrapper: ListWrapperType = {
-  traking: WrapperTraking,
+  tracking: WrapperTracking,
   scroll: WrapperScroll,
 };
