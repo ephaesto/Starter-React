@@ -1,95 +1,60 @@
-import {
-  DefaultOptions,
-  UseMutationOptions,
-  UseMutationResult,
-  UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query';
+import DefaultErrors from 'errors/DefaultErrors';
+import HttpErrors from 'errors/HttpErrors';
+import { UseBaseQueryResult, UseMutationResult as  QueryUseMutationResult} from '@tanstack/react-query';
+import { NavigateFunction } from 'react-router-dom';
 
-export type TypeCacheTags = string[];
-export type TypeRequest = Record<string, string> | undefined;
-export type TypeQuery = keyof TypeOptionsByTypeQuery<unknown>;
-export type TypeHandlerError<TError extends Error = Error> = (response: Response) => Promise<TError>;
-export type TypeHandlerResponse = (response: Response) => Promise<Response>;
+export type ICheckAuthentication = (navigate: NavigateFunction, error: TypeError | undefined) => void
 
-export enum Method {
-  GET = 'GET',
-  PUT = 'PUT',
-  POST = 'POST',
-  DELETE = 'DELETE',
-}
+export type Params = Record<string, string>;
 
-export interface IOptions {
-  headers?: Record<string, string>;
-  body?: Record<string, unknown> | null;
-  method?: Method;
-}
+export type TypeRequest = Params | undefined;
 
-export interface IQueryOptions<TQueryParams extends TypeRequest, TQuery extends TypeQuery, TError extends Error> {
-  path: string;
-  queryParameters?: TQuery extends 'query' ? TQueryParams : TypeRequest;
-  options?: IOptions | undefined;
-  handleResponse?: TypeHandlerResponse;
-  handleError?: TypeHandlerError<TError>;
-}
+export type TypeError = HttpErrors | DefaultErrors;
 
-export interface IqueryBuilderGeneratorProps<TError extends Error> {
-  baseUrl: string;
-  baseOptions: IOptions;
-  baseTanStackQueryOptions?: DefaultOptions;
-  baseQuery?: <TRequest extends TypeRequest, TResponse, TQuery extends TypeQuery, TBaseError extends TError>(
-    params: IQueryOptions<TRequest, TQuery, TBaseError>,
-  ) => Promise<TResponse>;
-  baseHandleResponse?: TypeHandlerResponse;
-  baseHandleError?: TypeHandlerError<TError>;
-}
-
-export type TypeUseQueryOptions<TResponse, TError = unknown> = Omit<
-  UseQueryOptions<TResponse, TError, TResponse, TypeCacheTags>,
-  'queryKey' | 'queryFn'
->;
-
-export type TypeUseMutationOptions<TResponse, TError = unknown> = Omit<
-  UseMutationOptions<TResponse, TError, unknown, unknown>,
-  'mutationKey' | 'mutationFn'
->;
-
-export interface TypeOptionsByTypeQuery<TResponse = unknown> {
-  query?: TypeUseQueryOptions<TResponse>;
-  mutation?: TypeUseMutationOptions<TResponse>;
-}
-
-export type TypeQueryBuilder<
-  TRequest extends TypeRequest,
-  TResponse,
-  TQuery extends TypeQuery,
-  TError extends Error,
-> = Omit<IQueryDispatcherProps<TRequest, TResponse, TQuery, TError>, 'baseProps'>;
-
-export interface IQueryDispatcherProps<
-  TRequest extends TypeRequest,
-  TResponse,
-  TQuery extends TypeQuery,
-  TError extends Error,
+export type ResponseQuery<Fn extends () => Promise<unknown>> = Awaited<ReturnType<Fn>>;
+export type ResponseMutation<Fn extends (variables: Parameters<Fn>[0]) => Promise<unknown>> = Awaited<ReturnType<Fn>>;
+export interface IUseNoCacheQueryReturn<
+  TData = unknown,
+  TError = unknown
 > {
-  queryOptions: Omit<IQueryOptions<TRequest, TQuery, TError>, 'queryParameters'>;
-  baseProps: IqueryBuilderGeneratorProps<TError>;
-  cacheTags?: string[];
-  tanStackOptions?: TypeOptionsByTypeQuery<TResponse>[TQuery];
-  queryParameters?: TQuery extends 'query' ? TRequest : TypeRequest;
+  data: TData | undefined;
+  isLoading: boolean;
+  error: TError | undefined;
+  isError: boolean;
+  isSuccess: boolean;
 }
 
-export type TypeQueryBuilderGeneratorResult<TError extends Error> = {
-  useQuery<TRequest extends TypeRequest, TResponse>(
-    params: TypeQueryBuilder<TRequest, TResponse, 'query', TError>,
-  ): UseQueryResult<TResponse, TError>;
+export interface IUseNoCacheMutationReturn<
+  TData= any,
+  TError = unknown,
+  TVariables = TData,
+> {
+  mutate: (variables: TVariables) => void,
+  mutateAsync: (variables: TVariables) => Promise<TData> | undefined,
+  data: TData | undefined;
+  isLoading: boolean;
+  error: TError | undefined;
+  isError: boolean;
+  isSuccess: boolean;
+}
 
-  useMutation<TRequest extends TypeRequest, TResponse>(
-    params: TypeQueryBuilder<TRequest, TResponse, 'mutation', TError>,
-  ): UseMutationResult<TResponse, TError, unknown, unknown>;
-};
 
-export interface IMergeOptionsProps<TRequest extends TypeRequest, TQuery extends TypeQuery, TError extends Error> {
-  baseProps: IqueryBuilderGeneratorProps<TError>;
-  queryOptions: IQueryOptions<TRequest, TQuery, TError>;
+export type UseMutationResult<
+  TData,
+  TError = unknown,
+  TVariables = TData,
+  TContext = unknown,
+>  = QueryUseMutationResult<TData, TypeError, TVariables , TContext> | IUseNoCacheMutationReturn< TError, TypeError,TVariables>;
+
+
+export type UseQueryResult<
+  TData = unknown,
+> = UseBaseQueryResult<TData, TypeError> | IUseNoCacheQueryReturn<TData, TypeError>
+
+export interface IUseNoCacheQuery<Fn extends () => Promise<ResponseQuery<Fn>>> {
+  queryFn: () => Promise<ResponseQuery<Fn>>;
+}
+
+export interface IUseNoCacheMutation<Fn extends (variables: Parameters<Fn>[0]) => Promise<ResponseMutation<Fn>>> {
+  mutationFn: (variables: Parameters<Fn>[0]) => Promise<ResponseMutation<Fn>> | undefined;
 }

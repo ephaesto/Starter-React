@@ -20,10 +20,10 @@
   "include": [
     "src",
     ".eslintrc.cjs",
-    ".prettierrc.cjs",
+    ".prettierrc.cts",
     "vite.config.ts",
     "jest.setup.ts",
-    "jest.config.cjs",
+    "jest.config.cts",
     "public/worker/mockServiceWorker.js"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -1,3 +1,3 @@
-import { CustomeRouteObject } from 'router/RouterTypes';
+import { CustomRouteObject } from 'router/RouterTypes';
 
-export type DefaultPagesObjectType = CustomeRouteObject[];
+export type DefaultPagesObjectType = CustomRouteObject[];

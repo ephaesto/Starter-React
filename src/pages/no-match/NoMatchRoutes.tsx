@@ -3,14 +3,14 @@ import NoMatch from './NoMatch';
 
 export const NoMatchRoutes: OptionsRoutesPagesType = [
   {
-    idRoute: 'nomatchlinked',
+    idRoute: 'noMatchLinked',
     path: ':noMatch*',
     element: <NoMatch />,
     layout: 'default',
     switch: ['auth', 'linked'],
   },
   {
-    idRoute: 'nomatchauth',
+    idRoute: 'noMatchAuth',
     path: ':noMatch*',
     element: <NoMatch />,
     layout: 'auth',

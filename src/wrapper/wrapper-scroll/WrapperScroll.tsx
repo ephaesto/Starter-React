@@ -1,4 +1,4 @@
-import { DefaultProps } from 'utils/nesting-container/NestingContainerType';
+import { DefaultProps } from 'utils/components/nesting-container/NestingContainerType';
 import { IWrapperProps } from 'wrapper/listWrapperTypes';
 
 const WrapperScroll = ({ idRoute, children }: DefaultProps<IWrapperProps>): JSX.Element => {

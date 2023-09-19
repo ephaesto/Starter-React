@@ -1,20 +1,20 @@
-import { CustomeRouteObject } from 'router/RouterTypes';
+import { CustomRouteObject } from 'router/RouterTypes';
 import { GroupByKeyType } from './groupByKey';
-import { copiePages } from './copiePages';
+import { copyPages } from './copyPages';
 import { PagesObjectType } from './types/SwitchRouteObjectType';
 
 export const addOtherPages = (
   pagesGroupByKey: GroupByKeyType,
   otherPages: Omit<PagesObjectType, 'wrapper' | 'idRoute'>,
-  keyname: keyof CustomeRouteObject,
+  keyName: keyof CustomRouteObject,
 ): GroupByKeyType => {
-  const copiedOtherPages = copiePages(otherPages);
+  const copiedOtherPages = copyPages(otherPages);
   Object.keys(pagesGroupByKey).forEach(key => {
     copiedOtherPages.forEach(pages => {
-      if (pages[keyname] && Array.isArray(pages[keyname]) && pages[keyname][0] === key) {
-        pages[keyname].shift();
-        if (pages[keyname].length === 0) {
-          delete pages[keyname];
+      if (pages[keyName] && Array.isArray(pages[keyName]) && pages[keyName][0] === key) {
+        pages[keyName].shift();
+        if (pages[keyName].length === 0) {
+          delete pages[keyName];
         }
         pagesGroupByKey[key].push(pages);
       }

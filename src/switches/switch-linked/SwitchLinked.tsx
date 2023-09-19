@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import Switch from 'utils/Switch';
+import Switch from 'utils/components/Switch';
 
 const SwitchLinked = (): JSX.Element => {
-  const [isValideState] = useState(true);
+  const [isValidState] = useState(true);
 
   return (
     <Switch>
-      <Navigate data-caseswitch={!isValideState} to="/unbording" replace />
+      <Navigate data-caseswitch={!isValidState} to="/unbording" replace />
       <Outlet data-defaultswitch />
     </Switch>
   );
