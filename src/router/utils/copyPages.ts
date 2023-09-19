@@ -1,6 +1,6 @@
 import { PagesObjectType } from './types/SwitchRouteObjectType';
 
-export const copiePages = (pages: PagesObjectType): PagesObjectType =>
+export const copyPages = (pages: PagesObjectType): PagesObjectType =>
   pages.map(page => {
     const currentPage = { ...page };
     if (currentPage.switch && Array.isArray(currentPage.switch)) {

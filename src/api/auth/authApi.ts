@@ -1,19 +1,53 @@
-import { queryBuilderGenerator } from 'api/utils/apiBuilder';
-import { sendQuery } from 'api/utils/query';
-import { IOptions, IQueryOptions, TypeQuery, TypeQueryBuilderGeneratorResult, TypeRequest } from 'api/utils/types';
+import { ConfigFetch, customFetch } from 'api/utils/customFetch';
+import { generateUrl } from 'api/utils/generateUrl';
+import { checkHttpError } from 'api/utils/checkHttpError';
+import DefaultErrors from 'errors/DefaultErrors';
+import HttpErrors from 'errors/HttpErrors';
+import { getEnvKey } from 'utils/functions/getEnvKey';
+import { pathToSuffix } from 'api/utils/pathToSuffix';
+import { recDeepMergeAll } from 'utils/functions/deepMergeObjects';
 
-const AUTH_BASE_URL = 'hhtps://inliconnect-';
-
-const baseQuery = async <TRequest extends TypeRequest, TResponse, TQuery extends TypeQuery, TError extends Error>(
-  params: IQueryOptions<TRequest, TQuery, TError>,
-): Promise<TResponse> => {
-  return sendQuery<TResponse, TQuery, TRequest, TError>(params);
+const prefix = 'Auth-';
+const baseUrl = getEnvKey('VITE_AUTH_API');
+const baseGetConfig = {
+  method: 'GET',
+  headers: {
+    Accept: 'application/json',
+  },
 };
 
-const baseOptions: IOptions = { headers: { 'Content-Type': 'text/xml' } };
+const basePostConfig = {
+  method: 'POST',
+};
+type PartialConf<TBody> = Partial<ConfigFetch<TBody>>;
 
-export const bffApiQueryBuilder: TypeQueryBuilderGeneratorResult<Error> = queryBuilderGenerator({
-  baseUrl: AUTH_BASE_URL,
-  baseOptions,
-  baseQuery,
-});
+export const authQuery =
+  <Response, TBody = Response,>
+  (path: string,
+    config?: PartialConf<TBody>,
+    newBaseConfig?: PartialConf<TBody>
+    ): (() => Promise<Response>) =>
+  async () => {
+    try {
+      const url = generateUrl(baseUrl, path);
+      const baseConfig = recDeepMergeAll<PartialConf<TBody>>(baseGetConfig, newBaseConfig);
+      const response = await customFetch<Response, TBody>(url, baseConfig, config);
+      return response;
+    } catch (err) {
+      const { isHttpError, error } = checkHttpError(err);
+      if (isHttpError) {
+        throw new HttpErrors(error.message, `${prefix}HttpError${pathToSuffix(path)}`, error.status);
+      }
+      throw new DefaultErrors(error.message, `${prefix}UnknownApiError${pathToSuffix(path)}`);
+    }
+  };
+
+export const authMutation = <
+  Response,
+  TBody = Response
+>(
+  path: string,
+  config?:Omit<Partial<ConfigFetch<TBody>>,'body'>
+): ((body:TBody) => Promise<Response>) =>(body) => {
+  return authQuery<Response, TBody>(path, {...config, body}, basePostConfig )()
+}

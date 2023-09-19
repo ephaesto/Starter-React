@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import './Onbording.css';
+import './Onboarding.css';
 
-const OnbordingPage = (): JSX.Element => {
+const OnboardingPage = (): JSX.Element => {
   const [count, setCount] = useState(0);
 
   return (
     <div className="App">
-      <h1>Onbording</h1>
+      <h1>Onboarding</h1>
       <div className="card">
         <button type="button" onClick={() => setCount(oldCount => oldCount + 1)}>
           count is {count}
@@ -16,4 +16,4 @@ const OnbordingPage = (): JSX.Element => {
   );
 };
 
-export default OnbordingPage;
+export default OnboardingPage;

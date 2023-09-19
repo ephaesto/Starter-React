@@ -5,11 +5,11 @@ export interface IFakeServer {
   nativeFetch: (input: RequestInfo, init?: RequestInit | undefined) => Promise<Response>;
 }
 
-const fakeServerRepesentation: IFakeServer = {
+const fakeServerRepresentation: IFakeServer = {
   nativeFetch: fetch,
 };
 
-export const FakeServerContext = createContext(fakeServerRepesentation);
+export const FakeServerContext = createContext(fakeServerRepresentation);
 
 interface IEnvironmentProviderProps {
   children: React.ReactNode;

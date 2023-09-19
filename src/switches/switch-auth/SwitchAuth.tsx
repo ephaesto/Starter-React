@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import Switch from 'utils/Switch';
+import Switch from 'utils/components/Switch';
 
 const SwitchAuth = (): JSX.Element => {
   const [isAuth] = useState(true);

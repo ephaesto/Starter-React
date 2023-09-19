@@ -1,25 +1,53 @@
-import { queryBuilderGenerator } from 'api/utils/apiBuilder';
-import { IOptions, TypeQueryBuilderGeneratorResult } from 'api/utils/types';
+import { ConfigFetch, customFetch } from 'api/utils/customFetch';
+import { generateUrl } from 'api/utils/generateUrl';
+import { checkHttpError } from 'api/utils/checkHttpError';
+import DefaultErrors from 'errors/DefaultErrors';
+import HttpErrors from 'errors/HttpErrors';
+import { getEnvKey } from 'utils/functions/getEnvKey';
+import { pathToSuffix } from 'api/utils/pathToSuffix';
+import { recDeepMergeAll } from 'utils/functions/deepMergeObjects';
 
-export interface IErrorHttp extends Error {
-  status: number;
-  body: string;
-  toString: () => string;
+const prefix = 'Bff-';
+export const baseUrl = getEnvKey('VITE_BFF_API');
+const baseGetConfig = {
+  method: 'GET',
+  headers: {
+    Accept: 'application/json',
+  },
+};
+
+const basePostConfig = {
+  method: 'POST',
+};
+type PartialConf<TBody> = Partial<ConfigFetch<TBody>>;
+
+export const bffQuery =
+  <Response, TBody = Response,>
+  (path: string,
+    config?: PartialConf<TBody>,
+    newBaseConfig?: PartialConf<TBody>
+    ): (() => Promise<Response>) =>
+  async () => {
+    try {
+      const url = generateUrl(baseUrl, path);
+      const baseConfig = recDeepMergeAll<PartialConf<TBody>>(baseGetConfig, newBaseConfig);
+      const response = await customFetch<Response, TBody>(url, baseConfig, config);
+      return response;
+    } catch (err) {
+      const { isHttpError, error } = checkHttpError(err);
+      if (isHttpError) {
+        throw new HttpErrors(error.message, `${prefix}HttpError${pathToSuffix(path)}`, error.status);
+      }
+      throw new DefaultErrors(error.message, `${prefix}UnknownApiError${pathToSuffix(path)}`);
+    }
+  };
+
+export const bffMutation = <
+  Response,
+  TBody = Response
+>(
+  path: string,
+  config?:Omit<Partial<ConfigFetch<TBody>>,'body'>
+): ((body:TBody) => Promise<Response>) =>(body) => {
+  return bffQuery<Response, TBody>(path, {...config, body}, basePostConfig )()
 }
-const BFF_BASE_URL = '/api';
-
-const baseUrl = BFF_BASE_URL;
-const baseOptions: IOptions = { headers: { 'Content-Type': 'application/json', Accept: 'application/json' } };
-const baseHandleError = async (response: Response): Promise<IErrorHttp> => ({
-  status: response.status,
-  body: await response.text(),
-  message: response.statusText,
-  name: 'Error http BFF',
-  toString: () => `Une erreur est survenue : ${response.status} ${response.statusText}`,
-});
-
-export const useBffApiQueryBuilder: TypeQueryBuilderGeneratorResult<IErrorHttp> = queryBuilderGenerator<IErrorHttp>({
-  baseUrl,
-  baseOptions,
-  baseHandleError,
-});

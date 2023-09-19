@@ -24,7 +24,7 @@ export const createRouteObject = ({
   switches,
   wrappers,
 }: CreateRouteObjectType): RouteObject[] => {
-  const pagesWithwrapper = addWrappers(pages, wrappers);
-  const test = nestingRouteObject({ parent: root, pages: pagesWithwrapper, layouts, switches });
+  const pagesWithWrapper = addWrappers(pages, wrappers);
+  const test = nestingRouteObject({ parent: root, pages: pagesWithWrapper, layouts, switches });
   return test;
 };
