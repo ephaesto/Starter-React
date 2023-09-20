@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { uuid } from 'aimless.js';
 import { Key } from 'react';
 
 interface IForProps<Value> {

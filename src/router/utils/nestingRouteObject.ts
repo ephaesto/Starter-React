@@ -21,12 +21,11 @@ export const nestingRouteObject = ({ parent, pages, layouts, switches }: Nesting
     return [routes];
   }
 
-  const { pagesList, layoutsList, switchesList, otherPages } = splitPagesByTheme(copyPages(pages));
+  const { pagesList, layoutsList, switchesList} = splitPagesByTheme(copyPages(pages));
 
   if (switchesList.length && switches) {
     const switchesGroupByKey = groupByKey(switchesList, 'switch');
-    const switchesGroupByKeyWithOtherPages = addOtherPages(switchesGroupByKey, otherPages, 'switch');
-    Object.entries(switchesGroupByKeyWithOtherPages).forEach(([keySwitch, pagesSwitch]) => {
+    Object.entries(switchesGroupByKey).forEach(([keySwitch, pagesSwitch]) => {
       if (keySwitch in switches) {
         const parentSwitch = switches[keySwitch as keyof SwitchesObjectType];
         if (!routes.children) {
@@ -36,14 +35,15 @@ export const nestingRouteObject = ({ parent, pages, layouts, switches }: Nesting
         if (currentSwitch) {
           routes.children.push(currentSwitch);
         }
+      }else{
+        console.error(`"${keySwitch}" isn't in switches` )
       }
     });
   }
 
   if (layoutsList.length && layouts) {
     const layoutsGroupByKey = groupByKey(layoutsList, 'layout');
-    const layoutsGroupByKeyWithOtherPages = addOtherPages(layoutsGroupByKey, otherPages, 'layout');
-    Object.entries(layoutsGroupByKeyWithOtherPages).forEach(([keyLayout, pagesLayout]) => {
+    Object.entries(layoutsGroupByKey).forEach(([keyLayout, pagesLayout]) => {
       if (keyLayout in layouts) {
         const parentLayout = layouts[keyLayout as keyof LayoutsObjectType];
 
@@ -55,6 +55,8 @@ export const nestingRouteObject = ({ parent, pages, layouts, switches }: Nesting
         if (currentLayout) {
           routes.children.push(currentLayout);
         }
+      } else {
+        console.error(`"${keyLayout}" isn't in layouts` )
       }
     });
   }
