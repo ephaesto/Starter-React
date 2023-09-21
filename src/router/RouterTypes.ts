@@ -1,7 +1,8 @@
-import { OptionsRoutesLayoutsType } from 'layouts/optionsRoutesLayoutsTypes';
+import { OptionsRoutesLayoutsType } from 'app/config/layouts/optionsRoutesLayoutsTypes';
+import { OptionsRoutesSwitchesType } from 'app/config/switches/optionsRoutesSwitchesTypes';
+import { ListWrapperType } from 'app/config/wrapper/listWrapperTypes';
 import { RouteObject } from 'react-router-dom';
-import { OptionsRoutesSwitchesType } from 'switches/optionsRoutesSwitchesTypes';
-import { ListWrapperType } from 'wrapper/listWrapperTypes';
+
 
 export type OmitChildrenRouteObject = Omit<RouteObject, 'children'>;
 

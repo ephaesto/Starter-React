@@ -1,6 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useMutationAuth } from 'api/hook/useMutationAuth';
-import { useNoCacheMutation } from 'api/hook/useNoCacheMutation';
 import { useQueryAuth } from 'api/hook/useQueryAuth';
 import { Params, UseMutationResult, UseQueryResult } from 'api/utils/types';
 import { bffMutation, bffQuery } from '../bffApi';
@@ -11,7 +10,7 @@ interface IParamsCounter extends Params {
 }
 
 export const useGetCounter = (params: IParamsCounter): UseQueryResult<ICounter> => {
-  return useQueryAuth({ queryFn: bffQuery<ICounter>(`/api/counter`, { params }) });
+  return useQueryAuth({ queryKey: ['tagOneCounter'] , queryFn: bffQuery<ICounter>(`/api/counter`, { params }) });
 };
 
 export const usePostCounter = (): UseMutationResult<ICounter>=> {

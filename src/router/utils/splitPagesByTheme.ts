@@ -5,14 +5,13 @@ type SplitPagesByThemeReturnTypes = {
   pagesList: RouteObject[];
   layoutsList: PagesObjectType;
   switchesList: PagesObjectType;
-  otherPages: PagesObjectType;
 };
 
 export const splitPagesByTheme = (pages: PagesObjectType): SplitPagesByThemeReturnTypes => {
   const pagesList: RouteObject[] = [];
   const layoutsList: Omit<PagesObjectType, 'wrapper' | 'idRoute'> = [];
   const switchesList: Omit<PagesObjectType, 'wrapper' | 'idRoute'> = [];
-  const otherPages = pages.reduce((oldOtherPages, page) => {
+  pages.reduce((oldOtherPages, page) => {
     if (!('layout' in page) && !('switch' in page)) {
       pagesList.push({ ...page });
       return oldOtherPages;
@@ -23,7 +22,7 @@ export const splitPagesByTheme = (pages: PagesObjectType): SplitPagesByThemeRetu
       return oldOtherPages;
     }
 
-    if (page.switch?.length === 1) {
+    if ((Array.isArray(page.switch) && page.switch?.length >= 1 )|| typeof page.switch === 'string' ) {
       switchesList.push({ ...page });
       return oldOtherPages;
     }
@@ -36,6 +35,5 @@ export const splitPagesByTheme = (pages: PagesObjectType): SplitPagesByThemeRetu
     pagesList,
     layoutsList,
     switchesList,
-    otherPages,
   };
 };
