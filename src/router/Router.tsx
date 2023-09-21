@@ -1,13 +1,13 @@
+import { optionsRoutesLayouts } from 'app/config/layouts/optionsRoutesLayouts';
+import { OptionsRoutesLayoutsType } from 'app/config/layouts/optionsRoutesLayoutsTypes';
+import { optionsRouteRoot } from 'app/config/pages/optionsRouteRoot';
+import { optionsRoutesPages } from 'app/config/pages/optionsRoutesPages';
+import { OptionsRoutesPagesType } from 'app/config/pages/optionsRoutesPagesTypes';
+import { optionsRoutesSwitches } from 'app/config/switches/optionsRoutesSwitches';
+import { OptionsRoutesSwitchesType } from 'app/config/switches/optionsRoutesSwitchesTypes';
+import { listWrapper } from 'app/config/wrapper/listWrapper';
+import { IWrapperProps, ListWrapperType } from 'app/config/wrapper/listWrapperTypes';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { optionsRoutesLayouts } from 'layouts/optionsRoutesLayouts';
-import { optionsRouteRoot } from 'pages/optionsRouteRoot';
-import { optionsRoutesPages } from 'pages/optionsRoutesPages';
-import { optionsRoutesSwitches } from 'switches/optionsRoutesSwitches';
-import { listWrapper } from 'wrapper/listWrapper';
-import { OptionsRoutesLayoutsType } from 'layouts/optionsRoutesLayoutsTypes';
-import { OptionsRoutesPagesType } from 'pages/optionsRoutesPagesTypes';
-import { OptionsRoutesSwitchesType } from 'switches/optionsRoutesSwitchesTypes';
-import { IWrapperProps, ListWrapperType } from 'wrapper/listWrapperTypes';
 import { createRouteObject } from './utils/createRouteObject';
 import { DefaultRootObjectType } from './utils/types/DefaultRootObjectType';
 
@@ -27,6 +27,7 @@ const route = createRouteObject({
   switches: optionsRoutesSwitches,
   wrappers: listWrapper,
 });
+
 const router = createBrowserRouter(route);
 
 const Router = (): JSX.Element => {
