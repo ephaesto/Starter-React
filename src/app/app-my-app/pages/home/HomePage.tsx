@@ -3,6 +3,7 @@ import reactLogo from 'assets/react.svg';
 import { atom, useAtom } from 'jotai';
 import './Home.css';
 
+
 const counterAtom = atom(0);
 const HomePage = (): JSX.Element => {
   const [count, setCount] = useAtom(counterAtom);

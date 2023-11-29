@@ -4,11 +4,13 @@ import { LoginRoutes } from 'app/app-auth/pages/login/LoginRoutes';
 import { OnboardingRoutes } from 'app/app-onboarding/pages/onboarding/OnboardingRoutes';
 import { NoMatchOnboardingRoutes } from 'app/app-onboarding/pages/no-match/NoMatchRoutes';
 import { OptionsRoutesPagesType } from './optionsRoutesPagesTypes';
+import { HelperRoutes } from 'app/app-my-app/pages/helper/HelperRoutes';
 
 export const optionsRoutesPages: OptionsRoutesPagesType = [
   ...LoginRoutes,
   ...OnboardingRoutes,
   ...NoMatchOnboardingRoutes,
   ...HomeRoutes,
+  ...HelperRoutes,
   ...NoMatchRoutes,
 ];

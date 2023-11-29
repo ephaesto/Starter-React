@@ -5,7 +5,7 @@ interface ISwitchProps {
 
 const Switch = ({ children: [Element, ...otherElement], condition = true }: ISwitchProps): JSX.Element => {
   const props = Element?.props || {};
-  // eslint-disable-next-line react/prop-types
+
   if (props['data-defaultswitch'] || props['data-caseswitch'] === condition || !Element) {
     return Element || null;
   }
