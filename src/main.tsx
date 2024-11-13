@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { ListOrderSetup, ListSetup } from 'setup/ListSetup';
+import { orderSetups, setups } from 'setups/.config/setups';
 import NestingContainer from 'utils/components/nesting-container/NestingContainer';
 import './index.css';
 import Router from './router/Router';
@@ -14,7 +14,7 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <NestingContainer containers={ListSetup} containersList={ListOrderSetup}>
+    <NestingContainer containers={setups} containersList={orderSetups}>
       <Router />
     </NestingContainer>
   </React.StrictMode>,

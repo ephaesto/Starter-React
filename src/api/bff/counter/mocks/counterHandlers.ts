@@ -3,7 +3,7 @@ import { baseUrl } from 'api/bff/bffApi';
 import { factories } from 'api/config/mocks/apiDB';
 import { generateUrl } from 'api/utils/generateUrl';
 import { RequestHandler, rest } from 'msw';
-import { getConfig } from 'setup/setup-fake-server/utils/setupConfig';
+import { getConfig } from 'setups/fake-server/utils/setupConfig';
 import { getEnvKey } from 'utils/functions/getEnvKey';
 
 

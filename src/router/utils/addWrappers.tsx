@@ -5,16 +5,16 @@ import { PagesObjectType, WrapperPropsObjectType, WrappersObjectType } from './t
 
 export const addWrappers = (
   pages: PagesObjectType,
-  wrappers?: WrappersObjectType,
-): Omit<PagesObjectType, 'wrapper' | 'idRoute'> => {
+  wrappers: WrappersObjectType,
+): Omit<PagesObjectType, 'wrapper'> => {
   const copiedPages = copyPages(pages);
   const pagesWrapperLess = copiedPages.map(page => {
     const globalProps = { idRoute: page.idRoute } as Partial<WrapperPropsObjectType>;
     const internalPages: Partial<CustomRouteObject> = { ...page };
     if (internalPages.wrappers && wrappers) {
       let arrayWrapper = internalPages.wrappers;
-      if (!Array.isArray(internalPages.wrappers)) {
-        arrayWrapper = [internalPages.wrappers];
+      if (!Array.isArray(arrayWrapper)) {
+        arrayWrapper = [arrayWrapper];
       }
       if (arrayWrapper.length) {
         const Element = internalPages.element;
@@ -27,12 +27,8 @@ export const addWrappers = (
         delete internalPages.wrappers;
       }
     }
-    if (internalPages.idRoute) {
-      delete internalPages.idRoute;
-    }
-
     return internalPages;
   });
 
-  return pagesWrapperLess as Omit<PagesObjectType, 'wrapper' | 'idRoute'>;
+  return pagesWrapperLess as Omit<PagesObjectType, 'wrapper'>;
 };

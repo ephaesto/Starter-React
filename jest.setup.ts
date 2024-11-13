@@ -1,1 +1,1 @@
-import './src/setup/setup-fake-server/service/serverTests';
+import './src/setups/fake-server/service/serverTests';

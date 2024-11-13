@@ -25,6 +25,6 @@
     "jest.setup.ts",
     "jest.config.cts",
     "public/worker/mockServiceWorker.js"
-  ],
+, "src/app/.config", "src/setups/.config"  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

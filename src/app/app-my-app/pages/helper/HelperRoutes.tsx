@@ -1,5 +1,5 @@
-import { OptionsRoutesPagesType } from 'app/config/pages/optionsRoutesPagesTypes';
 import HelperPage from './HelperPage';
+import { OptionsRoutesPagesType } from 'app/.config/pages/optionsRoutesPagesTypes';
 
 export const HelperRoutes: OptionsRoutesPagesType = [
 
@@ -10,5 +10,5 @@ export const HelperRoutes: OptionsRoutesPagesType = [
     wrappers: ['tracking', 'scroll'],
     layout: 'default',
     switch: ['auth', 'linked'],
-  },
+  }
 ];
